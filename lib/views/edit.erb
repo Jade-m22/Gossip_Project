@@ -1,15 +1,18 @@
 <html>
   <head>
-    <title>Éditer un potin</title>
+    <title>Édition du potin</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Édite le potin !</h1>
-      <form action='/gossips/<%= params['id'] %>/edit/' method='POST'>
-        Saisi ici ton nom :  <input type='text' name='gossip_author' value='<%= gossip.author %>'/><br/>
-        Actualise le potin : <input type='text' name='gossip_content' value='<%= gossip.content %>'/><br/>
-        <input type='submit'/>
-      </form>
-    </div>
+    <h1>Éditer le potin</h1>
+    <form action="/gossips/<%= params['id'] %>/edit" method="post">
+      <label for="gossip_author">Auteur :</label>
+      <input type="text" id="gossip_author" name="gossip_author" value="<%= gossip.author %>"><br>
+
+      <label for="gossip_content">Contenu :</label>
+      <textarea id="gossip_content" name="gossip_content"><%= gossip.content %></textarea><br>
+
+      <input type="submit" value="Mettre à jour">
+    </form>
+    <a href="/">Retour</a>
   </body>
 </html>

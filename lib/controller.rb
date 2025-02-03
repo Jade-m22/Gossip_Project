@@ -23,7 +23,11 @@ class ApplicationController < Sinatra::Base
 
   get '/gossips/:id' do
     gossip = Gossip.find(params[:id])
-    erb :show, locals: { gossip: gossip }
+    if gossip
+      erb :show, locals: { gossip: gossip }
+    else
+      "Potin introuvable !"
+    end
   end
   
   get '/gossips/:id/edit/' do
@@ -31,13 +35,8 @@ class ApplicationController < Sinatra::Base
     erb :edit, locals: { gossip: gossip }
   end
 
-
   post '/gossips/:id/edit' do
-    gossip = Gossip.find(params[:id])
-    gossip.author = params[:gossip_author]
-    gossip.content = params[:gossip_content]
-    gossip.save
-  
+    Gossip.update(params[:id], params[:gossip_author], params[:gossip_content])
     redirect "/"
   end
 
