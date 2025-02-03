@@ -1,4 +1,5 @@
 require './lib/gossip'
+require './lib/comment'
 require 'sinatra/base'
 
 class ApplicationController < Sinatra::Base
@@ -23,8 +24,9 @@ class ApplicationController < Sinatra::Base
 
   get '/gossips/:id' do
     gossip = Gossip.find(params[:id])
+    comments = Comment.find_by_gossip_id(params[:id])
     if gossip
-      erb :show, locals: { gossip: gossip }
+      erb :show, locals: { gossip: gossip, comments: comments }
     else
       "Potin introuvable !"
     end
@@ -40,4 +42,10 @@ class ApplicationController < Sinatra::Base
     redirect "/"
   end
 
+  post '/gossips/:id/comments' do
+    comment = Comment.new(params[:id], params[:comment_content])
+    comment.save
+    redirect "/gossips/#{params[:id]}"
+  end
+  
 end
